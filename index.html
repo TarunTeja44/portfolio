@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio | Tarun Teja.P</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Space Grotesk', 'Inter', 'sans-serif'],
+              body: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              background: '#FFFFFF',
+              surface: '#F4F4F4',
+              primary: {
+                400: '#000000',
+                500: '#1a1a1a',
+                600: '#333333',
+                900: '#000000',
+              },
+              secondary: {
+                400: '#9CA3AF',
+                500: '#6B7280',
+              },
+              dark: '#050505',
+            },
+            cursor: {
+                'none': 'none',
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        background-color: #FFFFFF;
+        color: #050505;
+        cursor: none;
+      }
+      
+      /* New Graphic Designer Cursor - Difference Mode */
+      .cursor-dot,
+      .cursor-outline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9999;
+        pointer-events: none;
+        mix-blend-mode: difference; /* Inverts colors behind it */
+      }
+      
+      .cursor-dot {
+        width: 12px;
+        height: 12px;
+        background-color: white; /* Will look black on white bg due to difference mode */
+      }
+      
+      .cursor-outline {
+        width: 50px;
+        height: 50px;
+        border: 1px solid white;
+        transition: transform 0.2s, background-color 0.2s, width 0.2s, height 0.2s;
+      }
+
+      body:hover .cursor-outline.hovered {
+        transform: translate(-50%, -50%) scale(1.5);
+        background-color: white;
+        border-color: transparent;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #FFFFFF;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #000000;
+        border-radius: 0px;
+      }
+      
+      .project-row:hover .project-title {
+        transform: translateX(20px);
+        font-style: italic;
+      }
+      
+      /* Modern Reveal Animations */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+      
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      /* Stagger Delays */
+      .delay-100 { transition-delay: 0.1s; }
+      .delay-200 { transition-delay: 0.2s; }
+      .delay-300 { transition-delay: 0.3s; }
+      .delay-400 { transition-delay: 0.4s; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="antialiased selection:bg-black selection:text-white">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
