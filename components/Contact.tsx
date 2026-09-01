@@ -1,245 +1,172 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Github, Linkedin, Instagram, Mail, Check, Copy, Send, Sparkles, MessageSquare, Terminal } from 'lucide-react';
-import confetti from 'canvas-confetti';
-import { SocialLink } from '../types';
-import { soundFx } from '../utils/sound';
+import { ArrowUpRight, Github, Linkedin, Instagram, Mail, Check, Copy } from 'lucide-react';
 
 const Contact: React.FC = () => {
-  const [formStatus, setFormStatus] = useState<'idle' | 'transmitting' | 'sent'>('idle');
-  const [copiedItem, setCopiedItem] = useState<string | null>(null);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [copied, setCopied] = useState(false);
+  const [formSent, setFormSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const socialLinks: SocialLink[] = [
-    {
-      id: 'linkedin',
-      name: 'LinkedIn',
-      handle: 'Tarun Teja',
-      url: 'https://www.linkedin.com/in/tarun-teja-a2a409334',
-      icon: <Linkedin className="w-5 h-5" />
-    },
-    {
-      id: 'github',
-      name: 'GitHub',
-      handle: '@TarunTeja44',
-      url: 'https://github.com/TarunTeja44',
-      icon: <Github className="w-5 h-5" />
-    },
-    {
-      id: 'instagram',
-      name: 'Instagram',
-      handle: '@tarunteja._',
-      url: 'https://www.instagram.com/tarunteja._',
-      icon: <Instagram className="w-5 h-5" />
-    },
-    {
-      id: 'email',
-      name: 'Email Direct',
-      handle: 'puligilatarunteja@gmail.com',
-      url: 'mailto:puligilatarunteja@gmail.com',
-      icon: <Mail className="w-5 h-5" />
-    }
-  ];
+  const email = "puligilatarunteja@gmail.com";
 
-  const handleCopy = (text: string, id: string) => {
-    soundFx.playClick();
-    navigator.clipboard.writeText(text);
-    setCopiedItem(id);
-    setTimeout(() => setCopiedItem(null), 2500);
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    soundFx.playClick();
-    setFormStatus('transmitting');
-
+    setIsSubmitting(true);
     setTimeout(() => {
-      setFormStatus('sent');
-      soundFx.playSuccess();
-
-      // Confetti burst for rewarding user action
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.7 },
-        colors: ['#10b981', '#ffffff', '#38bdf8', '#34d399']
-      });
-
-      setTimeout(() => {
-        setFormStatus('idle');
-        setFormData({ name: '', email: '', message: '' });
-      }, 3500);
-    }, 1200);
+      setIsSubmitting(false);
+      setFormSent(true);
+      setTimeout(() => setFormSent(false), 4000);
+    }, 1000);
   };
 
+  const socialLinks = [
+    {
+      name: 'Email',
+      value: email,
+      url: `mailto:${email}`,
+      icon: <Mail className="w-4 h-4" />
+    },
+    {
+      name: 'GitHub',
+      value: '@TarunTeja44',
+      url: 'https://github.com/TarunTeja44',
+      icon: <Github className="w-4 h-4" />
+    },
+    {
+      name: 'LinkedIn',
+      value: 'Tarun Teja',
+      url: 'https://www.linkedin.com/in/tarun-teja-a2a409334',
+      icon: <Linkedin className="w-4 h-4" />
+    },
+    {
+      name: 'Instagram',
+      value: '@tarunteja._',
+      url: 'https://www.instagram.com/tarunteja._',
+      icon: <Instagram className="w-4 h-4" />
+    }
+  ];
+
   return (
-    <section id="contact" className="py-28 px-6 lg:px-12 bg-black text-white relative overflow-hidden border-t border-white/10">
-      {/* Background Graphic Watermark */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full pointer-events-none opacity-[0.02] flex items-center justify-center select-none">
-        <span className="text-[36vw] font-black tracking-tighter uppercase whitespace-nowrap">
-          TRANSMIT
+    <section id="contact" className="py-24 px-6 max-w-5xl mx-auto">
+      {/* Section Header */}
+      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-12 reveal">
+        <h2 className="text-xs font-mono uppercase tracking-widest text-neutral-500">
+          Contact & Channels
+        </h2>
+        <span className="text-xs font-mono text-neutral-400">
+          Connect
         </span>
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10 space-y-16">
-        {/* Section Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Heading & Social Matrix */}
-          <div className="lg:col-span-6 space-y-8">
-            <div>
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 mb-6 reveal">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+        {/* Left Column: Direct Info */}
+        <div className="md:col-span-5 space-y-6 reveal">
+          <div className="space-y-3">
+            <h3 className="text-3xl font-bold tracking-tight text-black">
+              Let's connect.
+            </h3>
+            <p className="text-sm font-normal text-neutral-600 leading-relaxed">
+              I am open to internship opportunities, research collaborations, and engineering discussions.
+            </p>
+          </div>
+
+          {/* Social Links List */}
+          <div className="divide-y divide-neutral-200 border-y border-neutral-200">
+            {socialLinks.map((item) => (
+              <div key={item.name} className="py-3.5 flex items-center justify-between text-xs font-mono">
+                <span className="text-neutral-500 flex items-center gap-2">
+                  {item.icon}
+                  {item.name}
                 </span>
-                <span className="text-xs font-mono uppercase tracking-widest text-emerald-400">
-                  Open for Internship Opportunities
-                </span>
-              </div>
-              
-              <h3 className="font-sans font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.05] text-white reveal delay-100">
-                Let's build something <span className="text-emerald-400">remarkable</span>.
-              </h3>
 
-              <p className="font-sans text-sm sm:text-base font-light text-white/70 leading-relaxed max-w-lg mt-4 reveal delay-200">
-                Whether you're hiring for an AI / Engineering internship, looking to collaborate on machine learning research, or want to discuss systems architecture — my inbox is open.
-              </p>
-            </div>
-
-            {/* Quick Interactive Social Matrix */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-4">
-              {socialLinks.map((link, idx) => (
-                <div
-                  key={link.id}
-                  className={`group p-5 rounded-2xl border border-white/10 bg-white/[0.03] hover:border-emerald-500/40 hover:bg-white/[0.06] transition-all duration-300 flex flex-col justify-between h-[130px] reveal delay-${(idx + 1) * 100}`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="text-white/75 group-hover:text-emerald-400 transition-colors">
-                      {link.icon}
-                    </div>
-
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        onClick={() => handleCopy(link.handle, link.id)}
-                        onMouseEnter={() => soundFx.playHover()}
-                        className="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-white/40 hover:text-white transition-all cursor-pointer"
-                        title="Copy to clipboard"
-                      >
-                        {copiedItem === link.id ? (
-                          <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        ) : (
-                          <Copy className="w-3.5 h-3.5" />
-                        )}
-                      </button>
-
-                      <a
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => soundFx.playClick()}
-                        onMouseEnter={() => soundFx.playHover()}
-                        className="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-white/40 hover:text-white transition-all"
-                        title="Open external link"
-                      >
-                        <ArrowUpRight className="w-3.5 h-3.5" />
-                      </a>
-                    </div>
-                  </div>
-
-                  <div>
-                    <span className="block font-sans font-bold text-sm text-white group-hover:text-emerald-400 transition-colors">
-                      {link.name}
-                    </span>
-                    <span className="font-mono text-xs text-white/40 truncate block mt-0.5">
-                      {copiedItem === link.id ? '✓ Copied to clipboard!' : link.handle}
-                    </span>
-                  </div>
+                <div className="flex items-center gap-3">
+                  {item.name === 'Email' && (
+                    <button
+                      onClick={handleCopyEmail}
+                      className="text-neutral-400 hover:text-black transition-colors"
+                      title="Copy email address"
+                    >
+                      {copied ? <Check className="w-3.5 h-3.5 text-black" /> : <Copy className="w-3.5 h-3.5" />}
+                    </button>
+                  )}
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-black hover:opacity-60 transition-opacity inline-flex items-center gap-1 font-medium"
+                  >
+                    <span>{item.value}</span>
+                    <ArrowUpRight className="w-3 h-3 text-neutral-400" />
+                  </a>
                 </div>
-              ))}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Column: Clean Form */}
+        <div className="md:col-span-7 reveal delay-100">
+          <form onSubmit={handleSubmit} className="p-6 sm:p-8 rounded-xl bg-neutral-50 border border-neutral-200 space-y-4">
+            <h4 className="text-base font-semibold text-black pb-2 border-b border-neutral-200">
+              Send a message
+            </h4>
+
+            <div>
+              <label className="text-xs font-mono uppercase tracking-wider text-neutral-500 mb-1.5 block">
+                Name
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="Your name"
+                className="w-full bg-white text-sm px-3.5 py-2.5 rounded-lg border border-neutral-300 focus:border-black focus:outline-none transition-colors placeholder-neutral-400"
+              />
             </div>
-          </div>
 
-          {/* Right Column: Transmission Form */}
-          <div className="lg:col-span-6 reveal delay-200">
-            <form 
-              onSubmit={handleSubmit}
-              className="p-8 sm:p-10 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-2xl space-y-6 shadow-2xl"
+            <div>
+              <label className="text-xs font-mono uppercase tracking-wider text-neutral-500 mb-1.5 block">
+                Email
+              </label>
+              <input
+                type="email"
+                required
+                placeholder="your.email@example.com"
+                className="w-full bg-white text-sm px-3.5 py-2.5 rounded-lg border border-neutral-300 focus:border-black focus:outline-none transition-colors placeholder-neutral-400"
+              />
+            </div>
+
+            <div>
+              <label className="text-xs font-mono uppercase tracking-wider text-neutral-500 mb-1.5 block">
+                Message
+              </label>
+              <textarea
+                required
+                rows={4}
+                placeholder="What would you like to discuss?"
+                className="w-full bg-white text-sm px-3.5 py-2.5 rounded-lg border border-neutral-300 focus:border-black focus:outline-none resize-none transition-colors placeholder-neutral-400"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting || formSent}
+              className="w-full py-3 px-4 rounded-lg bg-black text-white text-xs font-mono uppercase tracking-wider hover:bg-neutral-800 transition-colors disabled:opacity-50"
             >
-              <div className="flex items-center justify-between pb-4 border-b border-white/10 text-xs font-mono text-white/40 uppercase tracking-wider">
-                <span className="flex items-center gap-2">
-                  <Terminal className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Direct Signal Dispatch</span>
-                </span>
-                <span>Port 443 / SSL</span>
-              </div>
-
-              <div>
-                <label className="text-[11px] font-mono uppercase tracking-widest text-white/60 mb-2 block">
-                  Your Name / Organization
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="e.g. Alex Morgan · Technical Recruiter"
-                  className="w-full bg-white/5 text-sm sm:text-base px-4 py-3.5 rounded-xl border border-white/10 focus:border-emerald-400 focus:outline-none transition-colors text-white placeholder-white/20"
-                />
-              </div>
-
-              <div>
-                <label className="text-[11px] font-mono uppercase tracking-widest text-white/60 mb-2 block">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="alex@company.com"
-                  className="w-full bg-white/5 text-sm sm:text-base px-4 py-3.5 rounded-xl border border-white/10 focus:border-emerald-400 focus:outline-none transition-colors text-white placeholder-white/20"
-                />
-              </div>
-
-              <div>
-                <label className="text-[11px] font-mono uppercase tracking-widest text-white/60 mb-2 block">
-                  Message / Role Scope
-                </label>
-                <textarea
-                  required
-                  rows={4}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Tell me about the engineering problem or internship position..."
-                  className="w-full bg-white/5 text-sm sm:text-base px-4 py-3.5 rounded-xl border border-white/10 focus:border-emerald-400 focus:outline-none resize-none transition-colors text-white placeholder-white/20"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={formStatus !== 'idle'}
-                onMouseEnter={() => soundFx.playHover()}
-                className="w-full py-4 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-black font-sans font-bold text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-between group disabled:opacity-50 cursor-pointer shadow-[0_0_30px_rgba(16,185,129,0.3)]"
-              >
-                <span>
-                  {formStatus === 'idle' ? 'Send Transmission' : formStatus === 'transmitting' ? 'Encrypting & Transmitting...' : 'Transmission Sent Successfully ✓'}
-                </span>
-                <Send className={`w-4 h-4 transition-transform duration-300 ${formStatus === 'idle' ? 'group-hover:translate-x-1' : ''}`} />
-              </button>
-            </form>
-          </div>
+              {formSent ? 'Message sent ✓' : isSubmitting ? 'Sending...' : 'Send message'}
+            </button>
+          </form>
         </div>
+      </div>
 
-        {/* Bottom Subfooter */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono uppercase tracking-widest text-white/40 reveal delay-300">
-          <p>© 2025 Tarun Teja P. — Engineered with precision & speed.</p>
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-emerald-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-              All Systems Operational
-            </span>
-            <span>India · UTC+5:30</span>
-          </div>
-        </div>
+      {/* Minimal Footer */}
+      <div className="pt-20 mt-20 border-t border-neutral-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-neutral-400">
+        <p>© {new Date().getFullYear()} Tarun Teja P. All rights reserved.</p>
+        <p>Built with React & Tailwind CSS.</p>
       </div>
     </section>
   );
