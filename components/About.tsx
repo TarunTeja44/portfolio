@@ -31,16 +31,16 @@ const About: React.FC = () => {
                     <div className="space-y-6">
                         <div className="border-t border-black pt-4 reveal delay-100">
                             <h4 className="text-xs font-bold uppercase tracking-widest mb-2">Education</h4>
-                            <p className="font-serif text-lg italic">B.Tech Computer Science</p>
+                            <p className="font-sans text-lg font-light">B.Tech Computer Science</p>
                             <p className="text-sm text-gray-500 mt-1">2024 - 2028 (Expected)</p>
                         </div>
                         <div className="border-t border-black pt-4 reveal delay-200">
                             <h4 className="text-xs font-bold uppercase tracking-widest mb-2">Current Focus</h4>
-                            <p className="font-serif text-lg italic">Machine Learning</p>
+                            <p className="font-sans text-lg font-light">Machine Learning</p>
                         </div>
                         <div className="border-t border-black pt-4 reveal delay-300">
                             <h4 className="text-xs font-bold uppercase tracking-widest mb-2">Location</h4>
-                            <p className="font-serif text-lg italic">India</p>
+                            <p className="font-sans text-lg font-light">India</p>
                         </div>
                     </div>
                 </div>
@@ -48,8 +48,8 @@ const About: React.FC = () => {
                 {/* Right Column: Copy & Skills */}
                 <div className="lg:col-span-8">
                     <div className="mb-20">
-                        <p className="font-serif text-3xl lg:text-5xl leading-tight text-black mb-12 indent-24 reveal">
-                            I believe that <span className="italic">learning</span> is a continuous loop. As a Computer Science sophomore, I am bridging the gap between <span className="border-b-2 border-black">theory</span> and application.
+                        <p className="font-sans text-3xl lg:text-5xl leading-tight font-light text-black mb-12 indent-24 reveal">
+                            I believe that <span className="font-medium">learning</span> is a continuous loop. As a Computer Science sophomore, I am bridging the gap between <span className="border-b-2 border-black">theory</span> and application.
                         </p>
 
                         <div className="font-sans text-sm leading-relaxed text-gray-800 space-y-6 max-w-2xl reveal delay-100">
@@ -75,7 +75,7 @@ const About: React.FC = () => {
                                 <div key={idx} className={`relative flex flex-col reveal delay-${(idx + 1) * 100}`}>
                                     <div className="border-b border-black/10 pb-4 mb-6">
                                         <span className="font-mono text-xs text-gray-400 mb-1 block">0{idx + 1}</span>
-                                        <h4 className="font-serif text-2xl italic text-black">{category.title}</h4>
+                                        <h4 className="font-sans text-2xl font-light text-black">{category.title}</h4>
                                     </div>
                                     <div className="flex flex-wrap gap-x-2 gap-y-3">
                                         {category.skills.map((skill) => (

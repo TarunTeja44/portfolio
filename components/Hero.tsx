@@ -22,7 +22,7 @@ const Hero: React.FC = () => {
                 ENGINEERING
             </h1>
             <div className="flex items-center gap-4 lg:gap-12">
-                 <h1 className="text-[12vw] leading-[0.8] font-serif italic text-black/90 reveal delay-200">
+                 <h1 className="text-[12vw] leading-[0.8] font-light tracking-tight text-black/80 reveal delay-200">
                     Student
                 </h1>
                 <div className="hidden lg:block h-px flex-1 bg-black mt-8 reveal delay-300"></div>

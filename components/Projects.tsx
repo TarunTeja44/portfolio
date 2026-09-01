@@ -59,7 +59,7 @@ const Projects: React.FC = () => {
     >
       <div className="px-6 lg:px-10 mb-12 flex items-end justify-between reveal">
          <h2 className="font-sans font-bold text-xs uppercase tracking-[0.2em] text-gray-400">Selected Works (2023-2025)</h2>
-         <span className="hidden md:block font-serif italic text-2xl">Digital Solutions</span>
+         <span className="hidden md:block font-sans font-light text-2xl">Digital Solutions</span>
       </div>
 
       <div className="flex flex-col border-t-2 border-black relative z-20 bg-white">
@@ -73,7 +73,7 @@ const Projects: React.FC = () => {
             >
                 <div className="flex items-baseline gap-8 lg:gap-16">
                     <span className="font-mono text-xs text-gray-400 group-hover:text-black transition-colors">0{index + 1}</span>
-                    <h3 className="relative font-serif text-4xl lg:text-6xl text-black overflow-hidden z-10 project-title transition-transform duration-500">
+                    <h3 className="relative font-sans font-medium text-4xl lg:text-6xl text-black overflow-hidden z-10 project-title transition-transform duration-500">
                         {project.title}
                     </h3>
                 </div>
@@ -137,7 +137,7 @@ const Projects: React.FC = () => {
       </div>
       
       <div className="mt-24 text-center reveal">
-         <a href="https://github.com/TarunTeja44" target="_blank" rel="noreferrer" className="inline-block border-b border-black pb-1 font-serif text-xl italic hover:text-gray-600 transition-colors">View All Projects Archive</a>
+         <a href="https://github.com/TarunTeja44" target="_blank" rel="noreferrer" className="inline-block border-b border-black pb-1 font-sans font-light text-xl hover:text-gray-600 transition-colors">View All Projects Archive</a>
       </div>
     </section>
   );

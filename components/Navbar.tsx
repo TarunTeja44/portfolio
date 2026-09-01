@@ -73,7 +73,7 @@ const Navbar: React.FC = () => {
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="font-serif text-6xl italic hover:pl-4 transition-all duration-300"
+                  className="font-sans text-6xl font-light hover:pl-4 transition-all duration-300"
                 >
                   <span className="font-sans text-sm not-italic block mb-2 text-gray-400">0{i+1}</span>
                   {link.name}

@@ -67,8 +67,8 @@ const Contact: React.FC = () => {
                         <h2 className="font-sans font-bold text-xs uppercase tracking-[0.2em] text-gray-500">Open for Opportunities</h2>
                     </div>
                     
-                    <h3 className="font-serif text-5xl lg:text-7xl leading-[0.9] mb-12 reveal delay-100">
-                        Ready to build <br/> the <span className="italic text-gray-400">extraordinary?</span>
+                    <h3 className="font-sans font-light text-5xl lg:text-7xl leading-[0.9] mb-12 reveal delay-100">
+                        Ready to build <br/> the <span className="font-extralight text-gray-400">extraordinary?</span>
                     </h3>
 
                     {/* New Unique Social Grid */}
