@@ -1,100 +1,112 @@
 import React from 'react';
 
 const About: React.FC = () => {
-    const skillCategories = [
-        {
-            title: "Languages",
-            skills: ["Python", "C++", "JavaScript", "TypeScript", "SQL"]
-        },
-        {
-            title: "Frameworks",
-            skills: ["TensorFlow", "PyTorch", "React", "Next.js", "Tailwind"]
-        },
-        {
-            title: "Tools",
-            skills: ["Docker", "Git", "AWS", "Linux", "PostgreSQL"]
-        }
-    ];
+  const skillCategories = [
+    {
+      title: "Languages",
+      skills: ["Python", "C++", "JavaScript", "TypeScript", "SQL"]
+    },
+    {
+      title: "Frameworks",
+      skills: ["TensorFlow", "PyTorch", "React", "Next.js", "Tailwind CSS"]
+    },
+    {
+      title: "Tools & Infra",
+      skills: ["Docker", "Git", "AWS", "Linux", "PostgreSQL", "Vite"]
+    }
+  ];
 
-    return (
-        <section id="about" className="py-24 px-6 lg:px-10 bg-[#F4F4F4]">
-            {/* Editorial Header */}
-            <div className="border-b-2 border-black pb-8 mb-12 flex justify-between items-end reveal">
-                <h2 className="text-[8vw] leading-none font-bold tracking-tighter">PROFILE</h2>
-                <span className="hidden md:block text-xs font-bold uppercase tracking-widest mb-2">University Student</span>
+  return (
+    <section id="about" className="py-28 px-6 lg:px-12 bg-[#FAFAFA] border-t border-black/5">
+      {/* Editorial Header */}
+      <div className="border-b border-black/15 pb-8 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-4 reveal">
+        <div>
+          <span className="font-mono text-xs text-black/40 uppercase tracking-[0.25em] block mb-2">Background</span>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-black">Profile & Stack</h2>
+        </div>
+        <span className="font-mono text-xs text-black/50 tracking-wider">
+          COMPUTER SCIENCE UNDERGRADUATE
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        {/* Left Column: Quick Facts (Sticky) */}
+        <div className="lg:col-span-4 flex flex-col justify-start lg:sticky lg:top-28 h-fit space-y-6">
+          <div className="p-6 rounded-2xl bg-white border border-black/[0.08] shadow-sm space-y-6">
+            <div className="reveal delay-100">
+              <span className="font-mono text-[10px] text-black/40 uppercase tracking-widest block mb-1">Education</span>
+              <p className="font-sans text-base font-semibold text-black">B.Tech Computer Science</p>
+              <p className="text-xs text-black/50 mt-0.5">2024 — 2028 (Expected)</p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
-                {/* Left Column: Stats Only */}
-                <div className="lg:col-span-4 flex flex-col justify-start h-full sticky top-24">
-                    {/* Stats */}
-                    <div className="space-y-6">
-                        <div className="border-t border-black pt-4 reveal delay-100">
-                            <h4 className="text-xs font-bold uppercase tracking-widest mb-2">Education</h4>
-                            <p className="font-sans text-lg font-light">B.Tech Computer Science</p>
-                            <p className="text-sm text-gray-500 mt-1">2024 - 2028 (Expected)</p>
-                        </div>
-                        <div className="border-t border-black pt-4 reveal delay-200">
-                            <h4 className="text-xs font-bold uppercase tracking-widest mb-2">Current Focus</h4>
-                            <p className="font-sans text-lg font-light">Machine Learning</p>
-                        </div>
-                        <div className="border-t border-black pt-4 reveal delay-300">
-                            <h4 className="text-xs font-bold uppercase tracking-widest mb-2">Location</h4>
-                            <p className="font-sans text-lg font-light">India</p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Right Column: Copy & Skills */}
-                <div className="lg:col-span-8">
-                    <div className="mb-20">
-                        <p className="font-sans text-3xl lg:text-5xl leading-tight font-light text-black mb-12 indent-24 reveal">
-                            I believe that <span className="font-medium">learning</span> is a continuous loop. As a Computer Science sophomore, I am bridging the gap between <span className="border-b-2 border-black">theory</span> and application.
-                        </p>
-
-                        <div className="font-sans text-sm leading-relaxed text-gray-800 space-y-6 max-w-2xl reveal delay-100">
-                            <p>
-                                <span className="font-bold uppercase mr-2">The Journey.</span>
-                                Currently in my second year of engineering, I spend my time outside of lectures building real-world projects. I am passionate about understanding how Large Language Models work under the hood and how they can be deployed effectively.
-                            </p>
-                            <p>
-                                My coursework provides the mathematical foundation—Linear Algebra, Calculus, Statistics—while my personal projects allow me to break things and rebuild them better. I am actively looking for internships to apply my growing skillset in a professional environment.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Redesigned Skills Section - 3 Column Grid */}
-                    <div className="mt-20">
-                        <div className="flex items-center gap-4 mb-12 reveal">
-                            <div className="h-[2px] w-12 bg-black"></div>
-                            <h3 className="font-bold text-4xl md:text-5xl tracking-tighter uppercase">Technical Arsenal</h3>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {skillCategories.map((category, idx) => (
-                                <div key={idx} className={`relative flex flex-col reveal delay-${(idx + 1) * 100}`}>
-                                    <div className="border-b border-black/10 pb-4 mb-6">
-                                        <span className="font-mono text-xs text-gray-400 mb-1 block">0{idx + 1}</span>
-                                        <h4 className="font-sans text-2xl font-light text-black">{category.title}</h4>
-                                    </div>
-                                    <div className="flex flex-wrap gap-x-2 gap-y-3">
-                                        {category.skills.map((skill) => (
-                                            <span
-                                                key={skill}
-                                                className="relative group overflow-hidden px-4 py-2 bg-white border border-black/10 text-xs font-bold uppercase tracking-wide transition-all duration-300 hover:border-black hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-default"
-                                            >
-                                                <span className="relative z-10">{skill}</span>
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+            <div className="border-t border-black/5 pt-5 reveal delay-200">
+              <span className="font-mono text-[10px] text-black/40 uppercase tracking-widest block mb-1">Current Focus</span>
+              <p className="font-sans text-base font-semibold text-black">Machine Learning & Scalable AI</p>
             </div>
-        </section>
-    );
+
+            <div className="border-t border-black/5 pt-5 reveal delay-300">
+              <span className="font-mono text-[10px] text-black/40 uppercase tracking-widest block mb-1">Location</span>
+              <p className="font-sans text-base font-semibold text-black">India (Open to Remote / Relocation)</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: Narrative & Technical Arsenal */}
+        <div className="lg:col-span-8">
+          {/* Manifesto / Bio */}
+          <div className="mb-20">
+            <p className="font-sans text-2xl sm:text-3xl lg:text-4xl leading-snug font-light text-black mb-10 reveal">
+              I believe that <span className="font-medium text-black">learning</span> is a continuous feedback loop. As a Computer Science sophomore, I focus on bridging the gap between mathematical foundations and high-performance applications.
+            </p>
+
+            <div className="font-sans text-sm sm:text-base font-light leading-relaxed text-black/75 space-y-5 max-w-2xl reveal delay-100">
+              <p>
+                Currently in my second year of engineering, I invest my time outside of lectures architecting real-world tools. I am fascinated by the inner mechanics of Large Language Models and transformer pipelines, alongside efficient backend architectures.
+              </p>
+              <p>
+                My coursework solidifies theoretical rigor — Linear Algebra, Probability, Algorithm Design — while practical development challenges me to build scalable, production-ready software.
+              </p>
+            </div>
+          </div>
+
+          {/* Technical Arsenal Grid */}
+          <div className="mt-16 pt-12 border-t border-black/10">
+            <div className="flex items-center gap-3 mb-10 reveal">
+              <span className="w-2 h-2 rounded-full bg-black" />
+              <h3 className="font-sans font-bold text-2xl tracking-tight text-black uppercase">
+                Technical Arsenal
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {skillCategories.map((category, idx) => (
+                <div 
+                  key={idx} 
+                  className={`p-6 rounded-2xl bg-white border border-black/[0.08] shadow-sm flex flex-col justify-between reveal delay-${(idx + 1) * 100}`}
+                >
+                  <div className="border-b border-black/5 pb-4 mb-6 flex items-center justify-between">
+                    <h4 className="font-sans font-semibold text-base text-black">{category.title}</h4>
+                    <span className="font-mono text-xs text-black/30">0{idx + 1}</span>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1.5 rounded-lg bg-black/[0.03] border border-black/[0.06] text-xs font-mono font-medium text-black/80 hover:bg-black hover:text-white hover:border-black transition-colors duration-200 cursor-default"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default About;

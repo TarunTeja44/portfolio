@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
 import Projects from './components/Projects';
+import About from './components/About';
 import Contact from './components/Contact';
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
-    // Custom Cursor Logic
+    // Custom Cursor Movement
     const moveCursor = (e: MouseEvent) => {
       setCursorPos({ x: e.clientX, y: e.clientY });
     };
@@ -22,7 +22,8 @@ function App() {
         target.tagName.toLowerCase() === 'button' ||
         target.closest('a') ||
         target.closest('button') ||
-        target.classList.contains('cursor-hover')
+        target.classList.contains('cursor-hover') ||
+        target.closest('.group')
       ) {
         setIsHovering(true);
       } else {
@@ -30,23 +31,20 @@ function App() {
       }
     };
 
-    window.addEventListener('mousemove', moveCursor);
-    window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('mousemove', moveCursor, { passive: true });
+    window.addEventListener('mouseover', handleMouseOver, { passive: true });
 
-    // --- Animation Observer Logic ---
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
-    }, observerOptions);
+    // Scroll Reveal Observer
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      },
+      { root: null, rootMargin: '0px 0px -50px 0px', threshold: 0.1 }
+    );
 
     const revealElements = document.querySelectorAll('.reveal');
     revealElements.forEach((el) => observer.observe(el));
@@ -56,17 +54,17 @@ function App() {
       window.removeEventListener('mouseover', handleMouseOver);
       revealElements.forEach((el) => observer.unobserve(el));
     };
-  }, []); // Run once on mount
+  }, []);
 
   return (
-    <div className="min-h-screen bg-white text-dark font-sans cursor-none relative">
-      {/* Custom Cursor */}
+    <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white relative">
+      {/* Custom Graphic Designer Cursor */}
       <div
         className="cursor-dot hidden md:block"
         style={{ left: `${cursorPos.x}px`, top: `${cursorPos.y}px` }}
       />
       <div
-        className={`cursor-outline hidden md:block transition-all duration-200 ease-out ${isHovering ? 'hovered' : ''}`}
+        className={`cursor-outline hidden md:block ${isHovering ? 'hovered' : ''}`}
         style={{
           left: `${cursorPos.x}px`,
           top: `${cursorPos.y}px`,
