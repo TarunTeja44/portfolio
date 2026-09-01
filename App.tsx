@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import NeuralCanvas from './components/NeuralCanvas';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Projects from './components/Projects';
@@ -10,7 +11,7 @@ function App() {
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
-    // Custom Cursor Movement
+    // Custom Cursor Tracking
     const moveCursor = (e: MouseEvent) => {
       setCursorPos({ x: e.clientX, y: e.clientY });
     };
@@ -43,7 +44,7 @@ function App() {
           }
         });
       },
-      { root: null, rootMargin: '0px 0px -50px 0px', threshold: 0.1 }
+      { root: null, rootMargin: '0px 0px -40px 0px', threshold: 0.08 }
     );
 
     const revealElements = document.querySelectorAll('.reveal');
@@ -57,8 +58,11 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white relative">
-      {/* Custom Graphic Designer Cursor */}
+    <div className="min-h-screen bg-black text-white font-sans selection:bg-emerald-500 selection:text-black relative overflow-x-hidden">
+      {/* Interactive Neural Canvas Background Mesh */}
+      <NeuralCanvas />
+
+      {/* Futuristic Custom Trailing Difference Cursor */}
       <div
         className="cursor-dot hidden md:block"
         style={{ left: `${cursorPos.x}px`, top: `${cursorPos.y}px` }}
@@ -71,8 +75,11 @@ function App() {
         }}
       />
 
+      {/* Floating Island Navigation */}
       <Navbar />
-      <main>
+
+      {/* Main Page Layout */}
+      <main className="relative z-10">
         <Hero />
         <Projects />
         <About />
