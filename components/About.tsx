@@ -1,7 +1,130 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
+
+interface SkillCategory {
+  title: string;
+  skills: string[];
+}
+
+const FloatingArsenalCard: React.FC<{
+  category: SkillCategory;
+  idx: number;
+}> = ({ category, idx }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const [glare, setGlare] = useState({ x: 50, y: 50, opacity: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateX = -((y - centerY) / centerY) * 14;
+    const rotateY = ((x - centerX) / centerX) * 14;
+    
+    setRotate({ x: rotateX, y: rotateY });
+    setGlare({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 0.2
+    });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setRotate({ x: 0, y: 0 });
+    setGlare((prev) => ({ ...prev, opacity: 0 }));
+  };
+
+  const floatClasses = ['animate-float-1', 'animate-float-2', 'animate-float-3'];
+  const floatClass = floatClasses[idx % floatClasses.length];
+
+  return (
+    <div 
+      className={`relative [perspective:1200px] reveal delay-${(idx + 1) * 100}`}
+    >
+      <div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transform: isHovered
+            ? `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) translateZ(30px) scale3d(1.03, 1.03, 1.03)`
+            : undefined,
+          transition: isHovered
+            ? 'transform 0.1s ease-out, box-shadow 0.2s ease-out'
+            : 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease-out',
+        }}
+        className={`
+          ${!isHovered ? floatClass : ''}
+          relative p-7 rounded-3xl bg-white/95 backdrop-blur-xl border border-black/[0.08]
+          shadow-[0_15px_35px_-10px_rgba(0,0,0,0.08),0_0_0_1px_rgba(0,0,0,0.03)]
+          hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.18),0_10px_20px_-5px_rgba(0,0,0,0.08),0_0_0_1px_rgba(0,0,0,0.08)]
+          preserve-3d cursor-pointer overflow-hidden flex flex-col justify-between min-h-[260px]
+        `}
+      >
+        {/* Dynamic Specular 3D Glare */}
+        <div
+          className="pointer-events-none absolute inset-0 rounded-3xl transition-opacity duration-300 z-30"
+          style={{
+            background: `radial-gradient(circle 220px at ${glare.x}% ${glare.y}%, rgba(255,255,255,0.9), transparent 80%)`,
+            opacity: glare.opacity,
+          }}
+        />
+
+        {/* 3D Elevated Header */}
+        <div 
+          className="border-b border-black/5 pb-4 mb-6 flex items-center justify-between transition-transform duration-300"
+          style={{ transform: 'translateZ(26px)' }}
+        >
+          <div className="flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-black/80" />
+            <h4 className="font-sans font-semibold text-lg tracking-tight text-black">{category.title}</h4>
+          </div>
+          <span className="font-mono text-xs font-semibold text-black/30 px-2 py-0.5 rounded-md bg-black/[0.03]">
+            0{idx + 1}
+          </span>
+        </div>
+        
+        {/* 3D Elevated Skill Pills */}
+        <div 
+          className="flex flex-wrap gap-2.5 transition-transform duration-300"
+          style={{ transform: 'translateZ(34px)' }}
+        >
+          {category.skills.map((skill) => (
+            <span
+              key={skill}
+              className="px-3.5 py-1.5 rounded-xl bg-black/[0.03] border border-black/[0.08] text-xs font-mono font-medium text-black/85 shadow-sm hover:bg-black hover:text-white hover:border-black hover:scale-105 hover:shadow-md transition-all duration-200 cursor-default"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+
+        {/* Subtle 3D Depth Floor Accent */}
+        <div 
+          className="mt-6 pt-3 flex justify-between items-center text-[10px] font-mono text-black/30 tracking-widest uppercase"
+          style={{ transform: 'translateZ(18px)' }}
+        >
+          <span>Production Ready</span>
+          <span className="text-black/50">● Active</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const About: React.FC = () => {
-  const skillCategories = [
+  const skillCategories: SkillCategory[] = [
     {
       title: "Languages",
       skills: ["Python", "C++", "JavaScript", "TypeScript", "SQL"]
@@ -17,7 +140,7 @@ const About: React.FC = () => {
   ];
 
   return (
-    <section id="about" className="py-28 px-6 lg:px-12 bg-[#FAFAFA] border-t border-black/5">
+    <section id="about" className="py-28 px-6 lg:px-12 bg-[#FAFAFA] border-t border-black/5 overflow-hidden">
       {/* Editorial Header */}
       <div className="border-b border-black/15 pb-8 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-4 reveal">
         <div>
@@ -69,37 +192,27 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          {/* Technical Arsenal Grid */}
+          {/* 3D Floating Technical Arsenal Grid */}
           <div className="mt-16 pt-12 border-t border-black/10">
-            <div className="flex items-center gap-3 mb-10 reveal">
-              <span className="w-2 h-2 rounded-full bg-black" />
-              <h3 className="font-sans font-bold text-2xl tracking-tight text-black uppercase">
-                Technical Arsenal
-              </h3>
+            <div className="flex items-center justify-between mb-10 reveal">
+              <div className="flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-black" />
+                <h3 className="font-sans font-bold text-2xl tracking-tight text-black uppercase">
+                  Technical Arsenal
+                </h3>
+              </div>
+              <span className="font-mono text-[11px] text-black/40 uppercase tracking-wider hidden sm:block">
+                Interactive 3D Perspective
+              </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-7">
               {skillCategories.map((category, idx) => (
-                <div 
-                  key={idx} 
-                  className={`p-6 rounded-2xl bg-white border border-black/[0.08] shadow-sm flex flex-col justify-between reveal delay-${(idx + 1) * 100}`}
-                >
-                  <div className="border-b border-black/5 pb-4 mb-6 flex items-center justify-between">
-                    <h4 className="font-sans font-semibold text-base text-black">{category.title}</h4>
-                    <span className="font-mono text-xs text-black/30">0{idx + 1}</span>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {category.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1.5 rounded-lg bg-black/[0.03] border border-black/[0.06] text-xs font-mono font-medium text-black/80 hover:bg-black hover:text-white hover:border-black transition-colors duration-200 cursor-default"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                <FloatingArsenalCard 
+                  key={category.title}
+                  category={category}
+                  idx={idx}
+                />
               ))}
             </div>
           </div>
